@@ -25,4 +25,4 @@ pluginManagement {
 }
 
 rootProject.name = 'Emojiful'
-include("Common", "Fabric", "Forge")
+include("Common", "Fabric")
