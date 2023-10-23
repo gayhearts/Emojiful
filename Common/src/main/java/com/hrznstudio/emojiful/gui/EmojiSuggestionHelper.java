@@ -8,7 +8,7 @@ import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.renderer.Rect2i;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EmojiSuggestionHelper extends IDrawableGuiListener {
+public class EmojiSuggestionHelper implements IDrawableGuiListener {
 
     private static final Pattern WHITESPACE_PATTERN = Pattern.compile("(\\s+)");
 
@@ -28,6 +28,15 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
     private boolean updating;
     private String inputFieldTextLast;
 
+    @Override
+    public void setFocused(boolean b) {
+
+    }
+
+    @Override
+    public boolean isFocused() {
+        return false;
+    }
     public EmojiSuggestionHelper(ChatScreen screen) {
         this.chatScreen = screen;
         this.updating = false;
@@ -110,7 +119,7 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
     }
 
     @Override
-    public void render(GuiGraphics matrixStack) {
+    public void render(PoseStack matrixStack) {
         if (this.suggestions != null) {
             this.suggestions.render(matrixStack);
         }
@@ -140,13 +149,13 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
             setIndex(0);
         }
 
-        public void render(GuiGraphics guiGraphics) {
+        public void render(PoseStack stack) {
             for (int i = 0; i < Math.min(this.suggestions.getList().size(), 10); ++i) {
                 int pos = (this.index + i) % this.suggestions.getList().size();
                 final Suggestion suggestion = this.suggestions.getList().get(pos);
-                guiGraphics.fill(this.area.getX(), this.area.getY() + 12 * i, this.area.getX() + this.area.getWidth() + 15, this.area.getY() + 12 * i + 12, 0xD0000000);
-                guiGraphics.drawString(Minecraft.getInstance().font, suggestion.getText(), this.area.getX() + 1, this.area.getY() + 2 + 12 * i, pos == this.index ? 0xFFFFFF00 : 0xFFAAAAAA, true);
-                guiGraphics.drawString(ClientEmojiHandler.oldFontRenderer, suggestion.getText(), 12 + this.area.getX() + 1, this.area.getY() + 2 + 12 * i, pos == this.index ? 0xFFFFFF00 : 0xFFAAAAAA, true);
+                GuiComponent.fill(stack, this.area.getX(), this.area.getY() + 12 * i, this.area.getX() + this.area.getWidth() + 15, this.area.getY() + 12 * i + 12, 0xD0000000);
+                Minecraft.getInstance().font.drawShadow(stack, suggestion.getText(), this.area.getX() + 1, this.area.getY() + 2 + 12 * i, pos == this.index ? 0xFFFFFF00 : 0xFFAAAAAA);
+                ClientEmojiHandler.oldFontRenderer.drawShadow(stack, suggestion.getText(), 12 + this.area.getX() + 1, this.area.getY() + 2 + 12 * i, pos == this.index ? 0xFFFFFF00 : 0xFFAAAAAA);
             }
         }
 

@@ -1,21 +1,17 @@
 package com.hrznstudio.emojiful.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 
-public abstract class IDrawableGuiListener implements GuiEventListener {
+public interface IDrawableGuiListener extends GuiEventListener {
 
+    void render(PoseStack stack);
 
-    abstract void render(GuiGraphics guiGraphics);
+	    @Override
+    public void setFocused(boolean b);
+
+    
 
     @Override
-    public void setFocused(boolean b) {
-
-    }
-
-    @Override
-    public boolean isFocused() {
-        return false;
-    }
+    public boolean isFocused();
 }
