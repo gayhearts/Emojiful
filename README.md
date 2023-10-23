@@ -2,8 +2,6 @@
 
 ![Emojiful Logo](src/main/resources/assets/emojiful/logo.png)
 
-![Emojiful Demo](src/main/resources/assets/emojiful/demo.gif)
-
 ![What Is This?](src/main/resources/assets/emojiful/textures/header1.png)
 [Emojiful](https://www.curseforge.com/minecraft/mc-mods/emojiful) adds in emoji to Minecraft allowing you to send emotion with ease. It supports animated emojis too! It has emoji autocomplete and emoji selection to easily search all the available emojis.
 
